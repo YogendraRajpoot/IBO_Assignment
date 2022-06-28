@@ -69,42 +69,38 @@ const listOfProducts = [
     description: "Ceiling Fan",
   },
 ];
-
+// ************************ Solution 1 *****************************
 
 let counts = {};
-
 const map = new Map();
 (function getUniqueProductCount() {
   listOfProducts.map((e) => {
     counts[e.productName] = (counts[e.productName] || 0) + 1;
   });
+  console.log("listOfProducts Output 1 :- ", counts); // output
 })();
 
-console.log(counts);
 
-const result = [
-  ...listOfProducts
-    .reduce((map, current) => {
-      const { productName } = current;
-      const grouped = map.get(productName);
-      if (!grouped) {
-        map.set(productName, { ...current });
-      } else {
-        map.set(productName, {
-          ...grouped,
-          quantity: grouped.quantity + current.quantity,
-        });
-      }
-      return map;
-    }, new Map())
-    .values(),
-];
 
-console.log(result);
-// let arr = [];
-// (function getUniquePrducts() {
-//   listOfProducts.filter((e) => {
-//     arr[e.quantity] = arr[e.quantity] + 1;
-//   });
-// })();
-// console.log(arr);
+// ************************ Solution 2 *****************************
+
+(function getUniquePrducts() {
+  const result = [
+    ...listOfProducts
+      .reduce((map, current) => {
+        const { productName } = current;
+        const grouped = map.get(productName);
+        if (!grouped) {
+          map.set(productName, { ...current });
+        } else {
+          map.set(productName, {
+            ...grouped,
+            quantity: grouped.quantity + current.quantity,
+          });
+        }
+        return map;
+      }, new Map())
+      .values(),
+  ];
+  console.log("listOfProducts Output 2 :- ", result); // output
+})();
